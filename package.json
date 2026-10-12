@@ -1,0 +1,28 @@
+{
+  "name": "tab-autorename",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Firefox MV3 add-on to rename tab titles using site rules and URL placeholders",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calladot/tab-autorename.git"
+  },
+  "author": "calladot",
+  "scripts": {
+    "clean": "rm -rf dist artifacts",
+    "build": "npm run clean && npm run typecheck && npm run build:js && npm run copy:assets",
+    "build:js": "esbuild src/background/index.ts src/content/rename.ts src/popup/index.ts --bundle --platform=browser --target=firefox140 --format=iife --outbase=src --outdir=dist --entry-names=[dir]/[name]",
+    "copy:assets": "shx mkdir -p dist/popup dist/icons && shx cp manifest.json dist/manifest.json && shx cp -r src/popup/* dist/popup && shx cp -r src/icons/* dist/icons",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "webext:lint": "web-ext lint -s dist",
+    "webext:run": "web-ext run -s dist -t firefox-desktop",
+    "webext:build": "npm run build && web-ext build -s dist -a artifacts --overwrite-dest"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^120.0.4",
+    "esbuild": "^0.25.10",
+    "shx": "^0.3.4",
+    "typescript": "^5.9.3",
+    "web-ext": "^8.9.0"
+  }
+}

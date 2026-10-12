@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab Auto Rename</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <section class="panel">
+        <h2 id="formTitle">Add rule</h2>
+        <form id="ruleForm" class="form-grid">
+          <label>
+            Match pattern
+            <input id="pattern" name="pattern" type="text" placeholder="https://example.com/*" required />
+          </label>
+
+          <label>
+            Title or template
+            <input id="value" name="value" type="text" placeholder="{origname} | {domain-1to2} | {path-1to2}" required />
+          </label>
+
+          <div class="preview" aria-live="polite">
+            <span class="preview-label">Preview:</span>
+            <span id="valuePreview" class="preview-value muted">Preview will appear here</span>
+          </div>
+
+          <div class="actions">
+            <button id="saveRule" type="submit">Save rule</button>
+            <button id="cancelEdit" type="button" class="secondary hidden">Cancel edit</button>
+            <p id="formMessage" class="status form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div id="placeholderList" class="hint" aria-label="Template placeholders">
+          <span class="hint-label">Placeholders:</span>
+          <button type="button" class="placeholder-chip" data-placeholder="{host}">{host}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{domain}">{domain}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{domain-1}">{domain-1}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{domain-1to2}">{domain-1to2}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{path}">{path}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{path-1}">{path-1}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{path-1to2}">{path-1to2}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{port}">{port}</button>
+          <button type="button" class="placeholder-chip" data-placeholder="{origname}">{origname}</button>
+          <button type="button" class="placeholder-chip placeholder-chip-strong" data-placeholder="{origname} | {domain-1to2} | {path-1to2}">
+            Base template
+          </button>
+          <p class="hint-note">Use N and NtoM indexes for domain/path parts.</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Matching rules</h2>
+          <button id="applyChanges" type="button">Apply &amp; close</button>
+        </div>
+        <div id="rulesList" class="rules-list"></div>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
